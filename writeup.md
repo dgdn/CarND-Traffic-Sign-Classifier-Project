@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/augment.png "Augment"
 [image4]: ./examples/road-work.jpg "Traffic Sign 1"
-[image5]: ./examples/speed-limit-70.jgp "Traffic Sign 2"
+[image5]: ./examples/speed-limit-70.jpg "Traffic Sign 2"
 [image6]: ./examples/bumpy-road.jpg "Traffic Sign 3"
 [image7]: ./examples/stop.jpg "Traffic Sign 4"
 [image8]: ./examples/yield.jpg "Traffic Sign 5"
@@ -88,8 +88,7 @@ My final model consisted of the following layers:
 | RELU					|												|
 | Dropout    			|												|
 | Fully connected		| outputs 43  									|
-| Softmax				| outputs 43   									|
-|						|												|
+| Softmax				|              									|
  
  The model archtechure is based on LeNet. I increased the filter size to capture more features since the traffic sign is much complex than minist data. To speed up traing, Batchnormalization is added below each convolution and fully connected layer. I use dropout as regulizer to tackle the overfit problem.
 
@@ -104,7 +103,11 @@ My final model results were:
 * validation set accuracy of 0.987
 * test set accuracy of 0.978
 
-I firstly tried LeNet model, it reached an accuracy of roughly 89% which was very promising. In the paper, Traffic Sign Recognition with Multi-Scale Convolutional Networks, LeCun mentioned a similar architecture that also consisted 2 convolution layers and 2 fully connected layers. The model can reached an accuracy of 98%. For the above two reasons, I deciede to use LeNet. Since the LeNet model was designed to recognize digit number which contains less features than the traffic sign, I tried to increase convolution filter size to 64 and 128, which help solved under fitting. Then the ajusted model can reached accuracy of 100% on training set while 93% on validation set, which strongly indicated over fitting. To improve validation accuracy, I added dropout with keep probobility of 0.5 after each fully connected layer. The validation accuracy was raised to 96% while the training accuracy was still 100%. More work should be done to over fitting problem. I added 80,000 more images to training data using data augmentation. The validation accuracy finally reached 98.7% even 99%. The model reach an accuracy of 97.8% on test set.
+I firstly tried LeNet model, it reached an accuracy of roughly 89% which was very promising. In the paper, Traffic Sign Recognition with Multi-Scale Convolutional Networks, LeCun mentioned a similar architecture that also consisted 2 convolution layers and 2 fully connected layers. The model can reached an accuracy of 98%. For the above two reasons, I deciede to use LeNet. 
+
+Since the LeNet model was designed to recognize digit number which contains less features than the traffic sign, I tried to increase convolution filter size to 64 and 128, which help solved under fitting. Then the ajusted model can reached accuracy of 100% on training set while 93% on validation set, which strongly indicated over fitting. To improve validation accuracy, I added dropout with keep probobility of 0.5 after each fully connected layer. The validation accuracy was raised to 96% while the training accuracy was still 100%. 
+
+More work should be done to over fitting problem. I added 80,000 more images to training data using data augmentation. The validation accuracy finally reached 98.7% even 99%. The model reach an accuracy of 97.8% on test set.
 
 ### Test a Model on New Images
 
