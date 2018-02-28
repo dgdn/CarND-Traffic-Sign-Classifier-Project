@@ -55,7 +55,7 @@ To add more data to the data set, I applied the common data augmentation tecnhiq
 
 Here is an example of an original image and an augmented image:
 
-![alt text][image3] ![alt text][image32]
+![alt text][image3] 
 
 The difference between the original data set and the augmented data set is the following:
 
@@ -84,7 +84,7 @@ My final model consisted of the following layers:
 | RELU					|												|
 | Dropout    			|												|
 | Fully connected		| outputs 80  									|
-| BN			k		|												|
+| BN					|												|
 | RELU					|												|
 | Dropout    			|												|
 | Fully connected		| outputs 43  									|
