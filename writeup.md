@@ -16,14 +16,14 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
+[image1]: ./examples/train-distribution.png "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image3]: ./examples/augment.png "Augment"
+[image4]: ./examples/road-work.jpg "Traffic Sign 1"
+[image5]: ./examples/speed-limit-70.jgp "Traffic Sign 2"
+[image6]: ./examples/bumpy-road.jpg "Traffic Sign 3"
+[image7]: ./examples/stop.jpg "Traffic Sign 4"
+[image8]: ./examples/yield.jpg "Traffic Sign 5"
 
 
 You're reading it! and here is a link to my [project code](https://github.com/dgdn/CarND-Traffic-Sign-Classifier-Project/Traffic_Sign_Classifier.ipynb)
@@ -55,9 +55,13 @@ To add more data to the data set, I applied the common data augmentation tecnhiq
 
 Here is an example of an original image and an augmented image:
 
-![alt text][image3]
+![alt text][image3] ![alt text][image32]
 
-The difference between the original data set and the augmented data set is the following ... 
+The difference between the original data set and the augmented data set is the following:
+
+* Rotated 10 degree clockwise
+* Shifted to left a little bit
+* perturbed color
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -91,8 +95,7 @@ My final model consisted of the following layers:
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an Adam optimizer with the default learning rate 0.001.
-The number of epochs is 30 and the batch size is 128.
+To train the model, I used an Adam optimizer with the default learning rate 0.001. The number of epochs is 30 and the batch size is 128.
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -101,18 +104,7 @@ My final model results were:
 * validation set accuracy of 0.987
 * test set accuracy of 0.978
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+I firstly tried LeNet model, it reached an accuracy of roughly 89% which was very promising. In the paper, Traffic Sign Recognition with Multi-Scale Convolutional Networks, LeCun mentioned a similar architecture that also consisted 2 convolution layers and 2 fully connected layers. The model can reached an accuracy of 98%. For the above two reasons, I deciede to use LeNet. Since the LeNet model was designed to recognize digit number which contains less features than the traffic sign, I tried to increase convolution filter size to 64 and 128, which help solved under fitting. Then the ajusted model can reached accuracy of 100% on training set while 93% on validation set, which strongly indicated over fitting. To improve validation accuracy, I added dropout with keep probobility of 0.5 after each fully connected layer. The validation accuracy was raised to 96% while the training accuracy was still 100%. More work should be done to over fitting problem. I added 80,000 more images to training data using data augmentation. The validation accuracy finally reached 98.7% even 99%. The model reach an accuracy of 97.8% on test set.
 
 ### Test a Model on New Images
 
@@ -123,7 +115,7 @@ Here are five German traffic signs that I found on the web:
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-The first image might be difficult to classify because ...
+The second image might be difficult to classify because in the traning set many speed limit signs of other type share common features, which can be hard for the model the learn.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -131,31 +123,31 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
+| Road work      		| Road work   									| 
+| 70 km/h		        | 70 km/h             							|
+| Bumpy Road	        | Bumpy Road					 				|
+| Stop Sign			    | Stop sign           							|
 | Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 97.8%.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the 1st, 3th, 4th, and 5th image, the model predicted correctly with relatively high confidence (0.99999 probobility).
+
+For the second image, the probability is slighlty lower than others. Here were the top 5 probabilities
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .999678     			| 70 km/h   									| 
+| .000171  				| 20 km/h 										|
+| .000084		        | 120 km/h	    								|
+| .000062   			| 80 km/h    					 				|
+| .000002   	        | Ture left           							|
 
-
-For the second image ... 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
